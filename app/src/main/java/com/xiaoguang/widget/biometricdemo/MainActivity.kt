@@ -16,16 +16,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.button).setOnClickListener {
-            showDialog()
-
+        findViewById<Button>(R.id.button1).setOnClickListener {
+            showDialog(true)
+        }
+        findViewById<Button>(R.id.button2).setOnClickListener {
+            showDialog(false)
         }
     }
 
-    private fun showDialog() {
+    private fun showDialog(enableAndroidP: Boolean) {
         BiometricPromptManager.Builder(this)
             // 启动安卓自带弹窗 default true，设置成false面部识别不生效
-            .enableAndroidP(true)
+            .enableAndroidP(enableAndroidP)
             .setCallback(fingerprintCallback)
             .title("请验证已录入的指纹/面容")
             .cancelText("取消")
