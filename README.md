@@ -1,7 +1,7 @@
 # BiometricDemo
-指纹识别，面部识别demo，用法超级简单
+指纹识别，面部识别，自定义弹窗，用法超级简单
 
-#  基于安卓原生指纹识别和面部识别的demo
+#  基于安卓原生指纹识别和面部识别的demo，可按需求自定义弹窗
 
 ##  功能：
     1：支持自定义弹窗
@@ -28,8 +28,9 @@
   <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 ```
 
+###  主要调用代码
 
-``` java
+``` kotlin
     private fun showDialog(enableAndroidP: Boolean) {
         BiometricPromptManager.Builder(this)
             // 启动安卓自带弹窗 default true，设置成false面部识别不生效
@@ -37,11 +38,11 @@
             .setCallback(fingerprintCallback)
             .title("请验证已录入的指纹/面容")
             .cancelText("取消")
-            // 以下设置 enableAndroidP true 安卓8以上手机无效
+            // 以下设置 enableAndroidP false 安卓8以上手机才有效
             .setImgRes(R.drawable.ic_fingerprint)
             .failTitle("未能识别指纹")
             .failContent("再试一次")
-            // 自定义弹窗(继承IBiometricDialog)
+            // 自定义弹窗(采用工厂模式，继承IBiometricDialog)
             //.setCustomDialog(BiometricDialogCustomImpl())
             .build()
     }
@@ -70,6 +71,27 @@
             Toast.makeText(this@MainActivity, "onCancel", Toast.LENGTH_SHORT).show()
         }
 
+    }
+    
+
+    /**
+     * onPause生命周期关闭自定义弹窗
+     */
+    override fun onPause() {
+        super.onPause()
+        if (null != manager) {
+            manager!!.onActivityPause()
+        }
+    }
+
+    /**
+     * onDestroy生命周期关闭自定义弹窗
+     */
+    override fun onDestroy() {
+        super.onDestroy()
+        if (null != manager) {
+            manager!!.onActivityDestroy()
+        }
     }
 ```
 
