@@ -37,10 +37,12 @@
             .setCallback(fingerprintCallback)
             .title("请验证已录入的指纹/面容")
             .cancelText("取消")
-            // enableAndroidP true 安卓8以上手机无效
+            // 以下设置 enableAndroidP true 安卓8以上手机无效
             .setImgRes(R.drawable.ic_fingerprint)
             .failTitle("未能识别指纹")
             .failContent("再试一次")
+            // 自定义弹窗(继承IBiometricDialog)
+            //.setCustomDialog(BiometricDialogCustomImpl())
             .build()
     }
 
