@@ -9,6 +9,9 @@ import com.xiaoguang.widget.biometric.BiometricDialog
 import com.xiaoguang.widget.biometric.IBiometricDialog
 
 /**
+ * 自定义弹窗
+ * 工厂模式
+ * 继承IBiometricDialog
  * Xiaoguang 2021-12-31 10:29 qq:929842234.
  */
 class BiometricDialogCustomImpl : IBiometricDialog {

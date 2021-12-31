@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onPause生命周期关闭自定义弹窗
+     */
     override fun onPause() {
         super.onPause()
         if (null != manager) {
@@ -46,6 +49,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onDestroy生命周期关闭自定义弹窗
+     */
     override fun onDestroy() {
         super.onDestroy()
         if (null != manager) {
