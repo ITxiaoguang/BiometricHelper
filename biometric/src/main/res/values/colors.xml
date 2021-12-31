@@ -1,36 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#21d2c5</color>
-
     <color name="transparent">@android:color/transparent</color>
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-
-    <!--  line  -->
-    <color name="line">#F2F3F5</color>
-    <color name="lineShape">#ADADAD</color>
-    <color name="lineNavigation">#B2B2B2</color>
-    <color name="lineItemView">#E5E5E5</color>
-    <color name="lineD8">#D8D8D8</color>
-    <color name="line7A">#7A7A7A</color>
-
-    <!--  text  -->
-    <color name="textColor">@color/black</color>
-    <color name="textColorHint">#C8C8C8</color>
-    <color name="textColorWhite">@color/white</color>
-    <color name="textColorRed">@color/textColorError</color>
-    <color name="textColorError">#FF453A</color>
-    <color name="textColorDisable">#EAEAEA</color><!--  文字不可用样式  -->
-    <color name="textColorLineDisable">#A7A7A7</color><!--  文字线条样式不可用样式  -->
-
     <!--  dialog  -->
-    <color name="dialogBackground">#F6F6F6</color>
-    <color name="dialogBackgroundBottom">#F0F0F0</color>
-
-    <!--  background  -->
-    <color name="backgroundDisable">#CCCCCC</color><!--  背景不可用样式  -->
-    <color name="backgroundSecond">#E9E9E9</color>
-    <color name="backgroundSecondSelect">#DEDEDE</color>
-    <color name="backgroundMain">#F2F2F2</color><!--  主背景  -->
-
+    <color name="biometricDialogBackground">#F6F6F6</color>
 </resources>

@@ -9,4 +9,5 @@ class BiometricConfig {
     var failContent: String = ""
     var cancelText: String = ""//取消按钮文字
     var imgRes = 0
+    var iBiometricDialog: IBiometricDialog? = null//弹窗
 }

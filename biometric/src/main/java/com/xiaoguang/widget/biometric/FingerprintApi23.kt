@@ -2,12 +2,9 @@ package com.xiaoguang.widget.biometric
 
 import android.content.Context
 import android.os.Build
-import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat
 import androidx.core.os.CancellationSignal
-import com.xiaoguang.widget.biometric.CommDialog.ButtonListener
-import com.xiaoguang.widget.biometric.CommDialog.ViewType
 
 /**
  * Android M == 6.0
@@ -39,8 +36,8 @@ class FingerprintApi23 : IFingerprint {
         //取消扫描，每次取消后需要重新创建新示例
         cancellationSignal = CancellationSignal()
         cancellationSignal!!.setOnCancelListener {
-            if (null != cancellationSignal && commDialog!!.isShowing) {
-                commDialog!!.dismiss()
+            if (null != cancellationSignal && config.iBiometricDialog!!.isShowing()) {
+                config.iBiometricDialog!!.dismiss()
             }
         }
 
@@ -52,24 +49,12 @@ class FingerprintApi23 : IFingerprint {
             authenticationCallback,
             null
         )
-        //指纹验证框
-        //指纹验证框
-        commDialog = CommDialog.Builder(context, ViewType.VERTICAL)
-            .setCanExit(false)
-            .setImgRes(config.imgRes)
-            .setTitle(config.title)
-            .setTop(config.cancelText, object : ButtonListener {
-                override fun onClick(d: CommDialog?, v: View?) {
-                    d?.dismiss()
-                }
-            })
-            .setOnDismissListener {
-                if (cancellationSignal != null && !cancellationSignal!!.isCanceled) {
-                    cancellationSignal!!.cancel()
-                }
+
+        config.iBiometricDialog!!.showDialog(context, config) {
+            if (cancellationSignal != null && !cancellationSignal!!.isCanceled) {
+                cancellationSignal!!.cancel()
             }
-            .create()
-        commDialog!!.show()
+        }
 
     }
 
@@ -82,11 +67,11 @@ class FingerprintApi23 : IFingerprint {
                 super.onAuthenticationError(errMsgId, errString)
                 //errMsgId==5时，在OnDialogActionListener的onCancle回调中处理；！=5的报错，才需要显示在指纹验证框中。
                 if (errMsgId != 5) {
-                    commDialog!!.setTitle(errString.toString())
-                    commDialog!!.setContent(null)
-                    commDialog!!.window!!.decorView.removeCallbacks(runnable)
-                    commDialog!!.window!!
-                        .decorView.postDelayed(runnable, 800)
+                    config?.iBiometricDialog!!.setTitle(errString.toString())
+                    config?.iBiometricDialog!!.setContent(null)
+                    config?.iBiometricDialog!!.getWindow().decorView.removeCallbacks(runnable)
+                    config?.iBiometricDialog!!.getWindow()
+                        .decorView.postDelayed(runnable, 1000)
                     if (fingerprintCallback != null) {
                         fingerprintCallback!!.onCancel()
                     }
@@ -95,33 +80,33 @@ class FingerprintApi23 : IFingerprint {
 
             override fun onAuthenticationHelp(helpMsgId: Int, helpString: CharSequence) {
                 super.onAuthenticationHelp(helpMsgId, helpString)
-                commDialog!!.setTitle(helpString.toString())
-                commDialog!!.setContent(null)
+                config?.iBiometricDialog!!.setTitle(helpString.toString())
+                config?.iBiometricDialog!!.setContent(null)
             }
 
             override fun onAuthenticationSucceeded(result: FingerprintManagerCompat.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
                 fingerprintCallback!!.onSucceeded23(result)
-                commDialog!!.dismiss()
+                config?.iBiometricDialog!!.dismiss()
             }
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
-                commDialog!!.setTitle(config!!.failTitle)
-                commDialog!!.setContent(config!!.failContent)
+                config?.iBiometricDialog!!.setTitle(config!!.failTitle)
+                config?.iBiometricDialog!!.setContent(config!!.failContent)
                 fingerprintCallback!!.onFailed()
             }
         }
     var runnable = Runnable {
-        if (null != commDialog) {
-            commDialog!!.dismiss()
+        if (null != config?.iBiometricDialog) {
+            config?.iBiometricDialog!!.dismiss()
         }
     }
 
     fun onActivityPause() {
-        if (null != commDialog) {
-            if (commDialog!!.isShowing) {
-                commDialog!!.dismiss()
+        if (null != config?.iBiometricDialog) {
+            if (config?.iBiometricDialog!!.isShowing()) {
+                config?.iBiometricDialog!!.dismiss()
                 if (fingerprintCallback != null) {
                     fingerprintCallback!!.onCancel()
                 }
@@ -130,22 +115,19 @@ class FingerprintApi23 : IFingerprint {
     }
 
     fun onActivityDestroy() {
-        if (null != commDialog) {
-            if (commDialog!!.isShowing) {
-                commDialog!!.dismiss()
+        if (null != config?.iBiometricDialog) {
+            if (config?.iBiometricDialog!!.isShowing()) {
+                config?.iBiometricDialog!!.dismiss()
                 if (fingerprintCallback != null) {
                     fingerprintCallback!!.onCancel()
                 }
             } else {
-                commDialog = null
+                config?.iBiometricDialog = null
             }
         }
     }
 
     companion object {
-        //指纹验证框
-        private var commDialog: CommDialog? = null
-
         //指纹加密
         private var cryptoObject: FingerprintManagerCompat.CryptoObject? = null
     }

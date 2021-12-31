@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_dialog"
+    android:layout_width="264dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="56dp"
+    android:background="@drawable/shape_dialog_radius_8"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:minHeight="26dp">
+
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="32dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        tools:text="请验证已录入的指纹/面容" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        tools:text="再试一次" />
+
+    <LinearLayout
+        android:id="@+id/ll_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:orientation="vertical"
+        android:paddingTop="12dp"
+        android:paddingBottom="34dp">
+
+        <TextView
+            android:id="@+id/tv_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:background="@drawable/shape_color_black_radius_6"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:padding="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:text="取消" />
+
+    </LinearLayout>
+
+</LinearLayout>

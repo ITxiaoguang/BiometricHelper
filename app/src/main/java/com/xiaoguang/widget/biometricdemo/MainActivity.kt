@@ -8,7 +8,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat
 import com.xiaoguang.widget.biometric.BiometricPromptManager
-import com.xiaoguang.widget.biometric.CommDialog.*
 import com.xiaoguang.widget.biometric.FingerprintCallback
 
 class MainActivity : AppCompatActivity() {
@@ -19,13 +18,45 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.button1).setOnClickListener {
             showDialog(true)
         }
+
         findViewById<Button>(R.id.button2).setOnClickListener {
             showDialog(false)
         }
+
+        findViewById<Button>(R.id.button3).setOnClickListener {
+            manager = BiometricPromptManager.Builder(this)
+                // 启动安卓自带弹窗 default true，设置成false面部识别不生效
+                .enableAndroidP(false)
+                .setCallback(fingerprintCallback)
+                .title("请验证已录入的指纹/面容\n(继承IBiometricDialog)")
+                .cancelText("取消")
+                // 一下设置 enableAndroidP true 安卓8以上手机无效
+                .setImgRes(R.drawable.ic_fingerprint)
+                .failTitle("未能识别指纹")
+                .failContent("再试一次")
+                .setCustomDialog(BiometricDialogCustomImpl())
+                .build()
+        }
     }
 
+    override fun onPause() {
+        super.onPause()
+        if (null != manager) {
+            manager!!.onActivityPause()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (null != manager) {
+            manager!!.onActivityDestroy()
+        }
+    }
+
+    private var manager: BiometricPromptManager? = null
+
     private fun showDialog(enableAndroidP: Boolean) {
-        BiometricPromptManager.Builder(this)
+        manager = BiometricPromptManager.Builder(this)
             // 启动安卓自带弹窗 default true，设置成false面部识别不生效
             .enableAndroidP(enableAndroidP)
             .setCallback(fingerprintCallback)

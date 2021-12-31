@@ -51,6 +51,7 @@ class BiometricPromptManager(builder: Builder) {
         var failTitle: String = ""
         var failContent: String = ""
         var cancelText: String = ""//取消按钮文字
+        var iBiometricDialog: IBiometricDialog? = null//弹窗
 
         /**
          * 指纹识别回调
@@ -121,6 +122,16 @@ class BiometricPromptManager(builder: Builder) {
         }
 
         /**
+         * 弹窗
+         *
+         * @param iBiometricDialog
+         */
+        fun setCustomDialog(iBiometricDialog: IBiometricDialog): Builder {
+            this.iBiometricDialog = iBiometricDialog
+            return this
+        }
+
+        /**
          * 开始构建
          *
          * @return
@@ -183,14 +194,19 @@ class BiometricPromptManager(builder: Builder) {
         }
 
         // API >= Android 6.0
-        val bean = BiometricConfig()
+        val config = BiometricConfig()
         // API  >= Android 9.0
         // 设定指纹验证框的样式
-        bean.imgRes = builder.imgRes
-        bean.title = builder.title
-        bean.failTitle = builder.failTitle
-        bean.failContent = builder.failContent
-        bean.cancelText = builder.cancelText
-        mImpl!!.authenticate(builder.context, bean, builder.callback)
+        config.imgRes = builder.imgRes
+        config.title = builder.title
+        config.failTitle = builder.failTitle
+        config.failContent = builder.failContent
+        config.cancelText = builder.cancelText
+        if(null == builder.iBiometricDialog){
+            config.iBiometricDialog = BiometricDialogImpl()
+        }else{
+            config.iBiometricDialog = builder.iBiometricDialog
+        }
+        mImpl!!.authenticate(builder.context, config, builder.callback)
     }
 }
