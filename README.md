@@ -9,7 +9,6 @@
 
 
 ## 截图:
-
 <img src = "screenshots/p1.jpg" width=200 >
 <img src = "screenshots/p2.jpg" width=200 >
 <img src = "screenshots/p3.jpg" width=200 >
