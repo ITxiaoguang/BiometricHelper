@@ -24,6 +24,40 @@
 </div>
 
 
+| 小于Android 6 Api 小于 23 |
+| --- | 
+| 不支持|
+
+</br>
+
+|  Android 6到8 Api 23到27 | 支持SDK弹窗/自定义弹窗 | 支持系统弹窗 | 支持面部识别 |
+| --- | --- | -- | -- |
+| 不开启enableAndroidP | true  | false  | false | 
+| 开启enableAndroidP  |true | false  | false |
+
+</br>
+
+|  Android 9 Api 28 | 支持SDK弹窗/自定义弹窗 | 支持系统弹窗 | 支持面部识别 |
+| --- | --- | -- | -- |
+| 不开启enableAndroidP | true  | false  | false | 
+| 开启enableAndroidP  |false | true  | false |
+
+</br>
+
+| 大于等于 Android 10 | 支持SDK弹窗/自定义弹窗 | 支持系统弹窗 | 支持面部识别 |
+| --- | --- | -- | -- |
+| 不开启enableAndroidP | true  | false  | false |
+| 开启enableAndroidP  |false | true  | true |
+
+### FAQ
+- 为什么接入SDK没有出现面部识别弹窗？
+    - 很多手机没有面部解锁功能
+    - 没有开启面部解锁功能
+    - 有面部解锁且开启面部解锁也不一定有识别弹窗出现
+    - 目前知道三星S21是可以面部识别，你有更多机型可以的调起面部识别弹窗的话可以留言
+- 为什么接入SDK没出现指纹识别？
+    - 手机不支持指纹解锁或没开启指纹解锁功能
+
 ## 使用方法:
 ###  需要指纹权限
 ```xml
