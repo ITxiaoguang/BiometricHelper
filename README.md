@@ -9,6 +9,8 @@
 
 
 ## 截图:
+
+<div align="center">
 <img src = "screenshots/p1.jpg" width=200 >
 <img src = "screenshots/p2.jpg" width=200 >
 <img src = "screenshots/p3.jpg" width=200 >
@@ -17,6 +19,7 @@
 <img src = "screenshots/p6.jpg" width=200 >
 <img src = "screenshots/p7.jpg" width=200 >
 <img src = "screenshots/p8.jpg" width=200 >
+</div>
 
 ## 特点功能:
 
