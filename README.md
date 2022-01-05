@@ -1,13 +1,12 @@
-# BiometricHelper
-指纹识别，面部识别，自定义弹窗，用法超级简单
+# BiometricHelper-指纹识别，面部识别，自定义弹窗，用法超级简单   
+## [github地址](https://github.com/ITxiaoguang/BiometricHelper)
 
-#  基于安卓原生指纹识别和面部识别的工具类，可按需求自定义弹窗
+# 基于安卓原生指纹识别和面部识别的工具类，可按需求自定义弹窗
 
-[掘金地址](https://juejin.cn/post/7047804532327677966)
 
-##  功能：
-    1：支持自定义弹窗
-    2：支持系统弹窗
+
+## 项目演示
+
 
 ## 截图:
 
@@ -21,8 +20,14 @@
 <img src = "screenshots/p7.jpg" width=200 >
 <img src = "screenshots/p8.jpg" width=200 >
 
-</div>
+## 特点功能:
 
+- 支持系统弹窗
+- 支持采用SDK弹窗
+- 支持采用自定义弹窗
+
+</br>
+</br>
 
 | 小于Android 6 Api 小于 23 |
 | --- | 
@@ -58,76 +63,97 @@
 - 为什么接入SDK没出现指纹识别？
     - 手机不支持指纹解锁或没开启指纹解锁功能
 
+## 如何添加
+### Gradle添加：
+#### 1.在Project的`build.gradle`中添加仓库地址
+
+``` gradle
+allprojects {
+  repositories {
+     ...
+     maven { url "https://jitpack.io" }
+  }
+}
+```
+
+#### 2.在Module目录下的`build.gradle`中添加依赖
+
+
+``` gradle
+dependencies {
+    implementation 'com.github.ITxiaoguang:BiometricHelper:xxx'
+}
+```
+
 ## 使用方法:
 ###  需要指纹权限
 ```xml
-  <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+<uses-permission android:name="android.permission.USE_FINGERPRINT" />
 ```
 
 ###  主要调用代码
 
 ``` kotlin
-    private fun showDialog(enableAndroidP: Boolean) {
-        BiometricPromptManager.Builder(this)
-            // 启动安卓自带弹窗 default true，设置成false面部识别不生效
+private fun showDialog(enableAndroidP: Boolean) {
+    BiometricPromptManager.Builder(this)
+    // 启动安卓自带弹窗 default true，设置成false面部识别不生效
             .enableAndroidP(enableAndroidP)
             .setCallback(fingerprintCallback)
             .title("请验证已录入的指纹/面容")
             .cancelText("取消")
-            // 以下设置 enableAndroidP false 安卓8以上手机才有效
+    // 以下设置 enableAndroidP false 安卓8以上手机才有效
             .setImgRes(R.drawable.ic_fingerprint)
             .failTitle("未能识别指纹")
             .failContent("再试一次")
-            // 自定义弹窗(采用工厂模式，继承IBiometricDialog)
-            //.setCustomDialog(BiometricDialogCustomImpl())
+    // 自定义弹窗(采用工厂模式，继承IBiometricDialog)
+    //.setCustomDialog(BiometricDialogCustomImpl())
             .build()
+}
+
+private val fingerprintCallback: FingerprintCallback = object : FingerprintCallback {
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    override fun onSucceeded23(result: FingerprintManagerCompat.AuthenticationResult?) {
+        Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
     }
 
-    private val fingerprintCallback: FingerprintCallback = object : FingerprintCallback {
-
-        @RequiresApi(api = Build.VERSION_CODES.M)
-        override fun onSucceeded23(result: FingerprintManagerCompat.AuthenticationResult?) {
-            Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.P)
-        override fun onSucceeded28(result: androidx.biometric.BiometricPrompt.AuthenticationResult?) {
-            Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
-        }
-
-        override fun onFailed() {
-            Toast.makeText(this@MainActivity, "onFailed", Toast.LENGTH_SHORT).show()
-        }
-
-        override fun onError(errString: CharSequence?) {
-            Toast.makeText(this@MainActivity, "onError " + errString, Toast.LENGTH_SHORT).show()
-        }
-
-        override fun onCancel() {
-            Toast.makeText(this@MainActivity, "onCancel", Toast.LENGTH_SHORT).show()
-        }
-
-    }
-    
-
-    /**
-     * onPause生命周期关闭自定义弹窗
-     */
-    override fun onPause() {
-        super.onPause()
-        if (null != manager) {
-            manager!!.onActivityPause()
-        }
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    override fun onSucceeded28(result: androidx.biometric.BiometricPrompt.AuthenticationResult?) {
+        Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
     }
 
-    /**
-     * onDestroy生命周期关闭自定义弹窗
-     */
-    override fun onDestroy() {
-        super.onDestroy()
-        if (null != manager) {
-            manager!!.onActivityDestroy()
-        }
+    override fun onFailed() {
+        Toast.makeText(this@MainActivity, "onFailed", Toast.LENGTH_SHORT).show()
     }
+
+    override fun onError(errString: CharSequence?) {
+        Toast.makeText(this@MainActivity, "onError " + errString, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCancel() {
+        Toast.makeText(this@MainActivity, "onCancel", Toast.LENGTH_SHORT).show()
+    }
+
+}
+
+
+/**
+ * onPause生命周期关闭自定义弹窗
+ */
+override fun onPause() {
+    super.onPause()
+    if (null != manager) {
+        manager!!.onActivityPause()
+    }
+}
+
+/**
+ * onDestroy生命周期关闭自定义弹窗
+ */
+override fun onDestroy() {
+    super.onDestroy()
+    if (null != manager) {
+        manager!!.onActivityDestroy()
+    }
+}
 ```
-
