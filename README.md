@@ -142,9 +142,7 @@ private val fingerprintCallback: FingerprintCallback = object : FingerprintCallb
  */
 override fun onPause() {
     super.onPause()
-    if (null != manager) {
-        manager!!.onActivityPause()
-    }
+    manager?.onActivityPause()
 }
 
 /**
@@ -152,8 +150,6 @@ override fun onPause() {
  */
 override fun onDestroy() {
     super.onDestroy()
-    if (null != manager) {
-        manager!!.onActivityDestroy()
-    }
+    manager?.onActivityDestroy()
 }
 ```
