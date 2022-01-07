@@ -44,9 +44,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onPause() {
         super.onPause()
-        if (null != manager) {
-            manager!!.onActivityPause()
-        }
+        manager?.onActivityPause()
     }
 
     /**
@@ -54,9 +52,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onDestroy() {
         super.onDestroy()
-        if (null != manager) {
-            manager!!.onActivityDestroy()
-        }
+        manager?.onActivityDestroy()
     }
 
     private var manager: BiometricPromptManager? = null
