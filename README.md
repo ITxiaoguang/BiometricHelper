@@ -78,7 +78,7 @@ allprojects {
 
 #### 2.在Module目录下的`build.gradle`中添加依赖
 
-
+[![](https://jitpack.io/v/ITxiaoguang/BiometricHelper.svg)](https://jitpack.io/#ITxiaoguang/BiometricHelper)
 ``` gradle
 dependencies {
     implementation 'com.github.ITxiaoguang:BiometricHelper:xxx'
