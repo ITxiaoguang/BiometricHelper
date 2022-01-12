@@ -1,5 +1,5 @@
 # BiometricHelper-指纹识别，面部识别，自定义弹窗，用法超级简单   
-## [github地址](https://github.com/ITxiaoguang/BiometricHelper)
+## [github地址](https://github.com/ITxiaoguang/BiometricHelper)  [码云地址](https://gitee.com/ITxiaoguang/BiometricHelper)
 
 # 基于安卓原生指纹识别和面部识别的工具类，可按需求自定义弹窗
 
